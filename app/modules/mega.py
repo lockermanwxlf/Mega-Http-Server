@@ -13,7 +13,10 @@ class Mega:
         path = '/' + path.lstrip('/')
         folder = self.api.getNodeByPath(path)
         folder = self.api.authorizeNode(folder)
-        return [node.getName() for node in folder.getChildren()]
+        if folder:
+            return [node.getName() for node in folder.getChildren()]
+        else:
+            return []
     
     def ensure_directory(self, path: str):
         path = '/' + path.rstrip('/')
