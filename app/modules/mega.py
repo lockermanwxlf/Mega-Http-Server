@@ -15,3 +15,16 @@ class Mega:
         folder = self.api.authorizeNode(folder)
         return [node.getName() for node in folder.getChildren()]
     
+    def ensure_directory(self, path: str):
+        path = '/' + path.rstrip('/')
+        node = self.api.getNodeByPath(path)
+        if node is None:
+            node = self.api.getRootNode()
+            for name in path.split('/')[1:]:
+                next_node = self.api.getNodeByPath(name, node)
+                if next_node is None:
+                    execute(self.api.createFolder, name, node)
+                    next_node = self.api.getNodeByPath(name, node)
+                node = next_node
+        return node
+            
