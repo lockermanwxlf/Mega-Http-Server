@@ -6,7 +6,7 @@ mega = Mega()
 
 app = Flask(__name__)
 
-@app.get("file")
+@app.get('/file')
 def check_file():
     # Return 400 if path is missing from query params.
     if 'path' not in request.args:
@@ -19,7 +19,7 @@ def check_file():
     else:
         return Response('', 404)
 
-@app.put("file")
+@app.put('/file')
 def upload_file():
     # Return 400 if mega_path or file is missing.
     if 'mega_path' not in request.form:
@@ -41,7 +41,7 @@ def upload_file():
 
     return Response('', 200)
 
-@app.post("file")
+@app.post('/file')
 def download_file():
     # Return 400 if mega_path or content_url is missing.
     for required in ['mega_path', 'content_url']:
