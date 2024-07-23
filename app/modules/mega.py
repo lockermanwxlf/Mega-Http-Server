@@ -32,3 +32,20 @@ class Mega:
         path = '/' + path.lstrip('/')
         node = self.api.getNodeByPath(path)
         return node is not None
+    
+    def upload_file(self, mega_path: str, local_path: str, modification_time: int | None = None):
+        mega_path = '/' + mega_path.lstrip('/')
+        mega_dir_path = '/' + '/'.join(mega_path[1:].split('/')[0:-1])
+        mega_dir_node = self.ensure_directory(mega_dir_path)
+        
+        if modification_time:
+            self.api.startUpload(
+                local_path,
+                mega_dir_node,
+                modification_time,
+                True, # Delete file from local storage after upload.
+                None)
+        else:
+            self.api.startUpload(
+                local_path,
+                mega_dir_node)
