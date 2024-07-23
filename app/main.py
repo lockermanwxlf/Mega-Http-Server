@@ -60,3 +60,7 @@ def download_file():
     mega.upload_file(mega_path, filepath, request.form.get('modification_time'))
     
     return Response('', 200)
+
+# Start server.
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80, use_reloader=False)
