@@ -17,3 +17,25 @@ def check_file():
         return Response('', 200)
     else:
         return Response('', 404)
+
+@app.put("file")
+def upload_file():
+    # Return 400 if mega_path or file is missing.
+    if 'mega_path' not in request.form:
+        return Response('Form missing \'mega_path\'.', 400)
+    if 'file' not in request.files:
+        return Response('Files missing \'file\'.', 400)
+      
+    # Get intended file name from mega_path.
+    mega_path = request.form['mega_path']
+    filename = mega_path.split('/')[-1]
+    filepath = f'/tmp/{filename}'
+    
+    # Save uploaded file.
+    file = request.files['file']
+    file.save(filepath)
+    
+    # Upload file.
+    mega.upload_file(mega_path, filepath, request.form.get('modification_time'))
+
+    return Response('', 200)
