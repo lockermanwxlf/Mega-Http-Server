@@ -61,6 +61,15 @@ def download_file():
     
     return Response('', 200)
 
+@app.get('/folder')
+def list_folder():
+    # Return 400 if path is missing.
+    if 'path' not in request.args:
+        return Response('Form missing \'path\'.', 400)
+    
+    # Return result of list_dir.
+    return mega.list_dir(request.args['path'])
+
 # Start server.
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, use_reloader=False)
