@@ -5,7 +5,7 @@ import os
 
 class Mega:
     def __init__(self, email=None, password=None) -> None:
-        self.api = MegaApi('mega-http-server', '/app/cache/')
+        self.api = MegaApi('mega-http-server', '/cache/')
         execute(self.api.login, os.environ.get('MEGA_EMAIL', email), os.environ.get('MEGA_PASSWORD', password))
         execute(self.api.fetchNodes)
         

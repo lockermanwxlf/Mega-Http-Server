@@ -10,6 +10,6 @@ COPY app/requirements.txt .
 
 RUN pip3 install -r requirements.txt
 
-RUN mkdir cache
+RUN mkdir /cache
 
 CMD [ "sh", "start.sh" ]
