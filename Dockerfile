@@ -1,5 +1,7 @@
 FROM lockermanwxlf/mega-python-bindings
 
+EXPOSE 80
+
 VOLUME [ "/app" ]
 
 WORKDIR /app
