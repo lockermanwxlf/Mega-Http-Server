@@ -28,3 +28,7 @@ class Mega:
                 node = next_node
         return node
             
+    def does_file_exist(self, path: str):
+        path = '/' + path.lstrip('/')
+        node = self.api.getNodeByPath(path)
+        return node is not None
