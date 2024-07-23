@@ -1,5 +1,6 @@
 from flask import Flask, Response, request
 from modules.mega import Mega
+from modules.download import download_to_file
 
 mega = Mega()
 
@@ -38,4 +39,24 @@ def upload_file():
     # Upload file.
     mega.upload_file(mega_path, filepath, request.form.get('modification_time'))
 
+    return Response('', 200)
+
+@app.post("file")
+def download_file():
+    # Return 400 if mega_path or content_url is missing.
+    for required in ['mega_path', 'content_url']:
+        if required not in request.form:
+            return Response(f'Form missing \'{required}\'.', 400)
+        
+    # Get intended file name from mega_path.
+    mega_path = request.form['mega_path']
+    filename = mega_path.split('/')[-1]
+    filepath = f'/tmp/{filename}'
+
+    # Download file from content_url.
+    download_to_file(request.form['content_url'], filepath)
+    
+    # Upload file
+    mega.upload_file(mega_path, filepath, request.form.get('modification_time'))
+    
     return Response('', 200)
