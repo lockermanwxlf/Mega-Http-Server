@@ -5,3 +5,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./app:/app"
+    ports:
+      - xxxx:80
+    environment:
+      - MEGA_EMAIL=name@example.xyz
+      - MEGA_PASSWORD=example_password
