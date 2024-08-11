@@ -45,7 +45,7 @@ class Mega:
             self.api.startUpload(
                 local_path,
                 mega_dir_node,
-                modification_time,
+                int(modification_time),
                 True, # Delete file from local storage after upload.
                 None)
         else:
